@@ -18,7 +18,7 @@ public class HomePageTests extends BaseTests {
 	@Test
 	public void testValidarCarrinhoZerado_zeroItensNoCarrinho() {
 		int produtosNoCarrinho = homePage.obterQuantidadeProdutosNoCarrinho();
-		System.out.println(produtosNoCarrinho);
 		assertThat(produtosNoCarrinho, is(0));
 	}
+
 }
