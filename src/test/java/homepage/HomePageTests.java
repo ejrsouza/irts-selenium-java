@@ -10,8 +10,15 @@ import static org.hamcrest.Matchers.is;
 public class HomePageTests extends BaseTests {
 
 	@Test
-	public void testcontarProdutos_oitoProdutosDiferentes() {
+	public void testContarProdutos_oitoProdutosDiferentes() {
 		carregarPaginaInicial();
 		assertThat(homePage.contarProdutos(), is(8));
+	}
+
+	@Test
+	public void testValidarCarrinhoZerado_zeroItensNoCarrinho() {
+		int produtosNoCarrinho = homePage.obterQuantidadeProdutosNoCarrinho();
+		System.out.println(produtosNoCarrinho);
+		assertThat(produtosNoCarrinho, is(0));
 	}
 }
