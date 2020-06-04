@@ -16,6 +16,8 @@ public class HomePage {
 	// private By produtos = By.cssSelector("div.product-description");
 	private By produtos = By.className("product-description");
 	private By textoProdutosNoCarrinho = By.className("cart-products-count");
+	private By descricoesDosProdutos = By.cssSelector(".product-description a");
+	private By precoDosProdutos = By.className("price");
 
 	public HomePage(WebDriver driver) {
 		this.driver = driver;
@@ -40,4 +42,20 @@ public class HomePage {
 		return qtdProdutosNoCarrinho;
 	}
 
+	public String obterNomeProduto(int indice) {
+		// return driver.findElements(descricoesDosProdutos).get(indice).getText();
+
+		String nomeProduto = driver.findElements(descricoesDosProdutos).get(indice).getText();
+		return nomeProduto;
+	}
+
+	public String obterPrecoProduto(int indice) {
+		String precoProduto = driver.findElements(precoDosProdutos).get(indice).getText();
+		return precoProduto;
+	}
+	
+	public ProdutoPage clicarProduto(int indice) {
+		driver.findElements(descricoesDosProdutos).get(indice).click();
+		return new ProdutoPage(driver);
+	}
 }
