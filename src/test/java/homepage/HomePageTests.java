@@ -104,9 +104,9 @@ public class HomePageTests extends BaseTests {
 		assertTrue(modalProdutoPage.obterMensagemProdutoAdicionado()
 				.endsWith("Product successfully added to your shopping cart"));
 
-		System.out.println(modalProdutoPage.obterTamanhoProduto());
-		System.out.println(modalProdutoPage.obterCorProduto());
-		System.out.println(modalProdutoPage.obterQuantidadeProduto());
+		assertThat(modalProdutoPage.obterTamanhoProduto(), is(tamanhoProduto));
+		assertThat(modalProdutoPage.obterCorProduto(), is(corProduto));
+		assertThat(modalProdutoPage.obterQuantidadeProduto(), is(Integer.toString(quantidadeProduto)));
 	}
 
 }

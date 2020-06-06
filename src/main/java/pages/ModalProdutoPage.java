@@ -40,5 +40,7 @@ public class ModalProdutoPage {
 	public String obterQuantidadeProduto() {
 		return driver.findElements(listaValoresInformados).get(2).getText();
 	}
+	
+	
 
 }
