@@ -28,6 +28,7 @@ public class HomePageTests extends BaseTests {
 	}
 
 	ProdutoPage produtoPage;
+	String nomeProduto_ProdutoPage;
 
 	@Test
 	public void testValidarDetalhesdoProduto_DescricaoEValorIguais() {
@@ -37,7 +38,7 @@ public class HomePageTests extends BaseTests {
 
 		produtoPage = homePage.clicarProduto(indice);
 
-		String nomeProduto_ProdutoPage = produtoPage.obterNomeProduto();
+		nomeProduto_ProdutoPage = produtoPage.obterNomeProduto();
 		String precoProduto_ProdutoPage = produtoPage.obterPrecoProduto();
 
 		assertThat(nomeProduto_HomePage.toUpperCase(), is(nomeProduto_ProdutoPage.toUpperCase()));
@@ -104,9 +105,25 @@ public class HomePageTests extends BaseTests {
 		assertTrue(modalProdutoPage.obterMensagemProdutoAdicionado()
 				.endsWith("Product successfully added to your shopping cart"));
 
+		System.out.println(modalProdutoPage.obterDescricaoProduto());
+		
+		assertThat(modalProdutoPage.obterDescricaoProduto().toUpperCase(), is(nomeProduto_ProdutoPage.toUpperCase()));
+		
+		String precoProdutoString = modalProdutoPage.obterPrecoProduto();
+		precoProdutoString = precoProdutoString.replace("$", "");
+		Double precoProduto = Double.parseDouble(precoProdutoString);
+
 		assertThat(modalProdutoPage.obterTamanhoProduto(), is(tamanhoProduto));
 		assertThat(modalProdutoPage.obterCorProduto(), is(corProduto));
 		assertThat(modalProdutoPage.obterQuantidadeProduto(), is(Integer.toString(quantidadeProduto)));
+		
+		String subtotalString = modalProdutoPage.obterSubtotal();
+		subtotalString = subtotalString.replace("$", "");
+		Double subtotal = Double.parseDouble(subtotalString);
+		
+		Double subtotalCalculado = quantidadeProduto * precoProduto;
+		
+		assertThat(subtotal, is(subtotalCalculado));
 	}
 
 }
