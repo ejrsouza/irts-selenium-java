@@ -48,20 +48,20 @@ public class ProdutoPage {
 	}
 
 	public Select encontrarDropdownSize() {
-		
+
 		return new Select(driver.findElement(tamnhoProduto));
 
 	}
-	
+
 	public void selecionarCorPreta() {
 		driver.findElement(inputCorPreta).click();
 	}
-	
+
 	public void alterarQuantidade(int quantidade) {
 		driver.findElement(quantidadeProduto).clear();
 		driver.findElement(quantidadeProduto).sendKeys(Integer.toString(quantidade));
 	}
-	
+
 	public ModalProdutoPage clicarBotaoAddToCart() {
 		driver.findElement(btnAdicionarCarrinho).click();
 		return new ModalProdutoPage(driver);

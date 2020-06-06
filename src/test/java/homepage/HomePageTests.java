@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import base.BaseTests;
+import pages.CarrinhoPage;
 import pages.LoginPage;
 import pages.ModalProdutoPage;
 import pages.ProdutoPage;
@@ -64,6 +65,7 @@ public class HomePageTests extends BaseTests {
 		carregarPaginaInicial();
 	}
 
+	ModalProdutoPage modalProdutoPage;
 	@Test
 	public void incluirProdutoNoCarrinho_ProdutoIncluidoComSucesso() {
 
@@ -99,16 +101,16 @@ public class HomePageTests extends BaseTests {
 		produtoPage.alterarQuantidade(quantidadeProduto);
 
 		// Adicionar no Carrinho de compras
-		ModalProdutoPage modalProdutoPage = produtoPage.clicarBotaoAddToCart();
+		modalProdutoPage = produtoPage.clicarBotaoAddToCart();
 
 		// Validações
 		assertTrue(modalProdutoPage.obterMensagemProdutoAdicionado()
 				.endsWith("Product successfully added to your shopping cart"));
 
 		System.out.println(modalProdutoPage.obterDescricaoProduto());
-		
+
 		assertThat(modalProdutoPage.obterDescricaoProduto().toUpperCase(), is(nomeProduto_ProdutoPage.toUpperCase()));
-		
+
 		String precoProdutoString = modalProdutoPage.obterPrecoProduto();
 		precoProdutoString = precoProdutoString.replace("$", "");
 		Double precoProduto = Double.parseDouble(precoProdutoString);
@@ -116,14 +118,23 @@ public class HomePageTests extends BaseTests {
 		assertThat(modalProdutoPage.obterTamanhoProduto(), is(tamanhoProduto));
 		assertThat(modalProdutoPage.obterCorProduto(), is(corProduto));
 		assertThat(modalProdutoPage.obterQuantidadeProduto(), is(Integer.toString(quantidadeProduto)));
-		
+
 		String subtotalString = modalProdutoPage.obterSubtotal();
 		subtotalString = subtotalString.replace("$", "");
 		Double subtotal = Double.parseDouble(subtotalString);
-		
+
 		Double subtotalCalculado = quantidadeProduto * precoProduto;
-		
+
 		assertThat(subtotal, is(subtotalCalculado));
+	}
+	
+	@Test
+	public void irParaCarrinho_InformacoesPersistidas() {
+		//--Pré-condições
+		//Produto incluído na tela ModalProdutoPage
+		incluirProdutoNoCarrinho_ProdutoIncluidoComSucesso();
+		
+		CarrinhoPage carrinhoPage = modalProdutoPage.clicarBotaoProceedToCheckout();
 	}
 
 }
