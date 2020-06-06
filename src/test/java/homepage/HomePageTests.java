@@ -65,11 +65,11 @@ public class HomePageTests extends BaseTests {
 
 	@Test
 	public void incluirProdutoNoCarrinho_ProdutoIncluidoComSucesso() {
-		
+
 		String tamanhoProduto = "M";
 		String corProduto = "Black";
 		int quantidadeProduto = 2;
-		
+
 		// --Pré-condição
 		// Usuário logado
 		if (!homePage.estaLogado("Marcelo Bittencourt")) {
@@ -100,9 +100,13 @@ public class HomePageTests extends BaseTests {
 		// Adicionar no Carrinho de compras
 		ModalProdutoPage modalProdutoPage = produtoPage.clicarBotaoAddToCart();
 
-		//Validações
+		// Validações
 		assertTrue(modalProdutoPage.obterMensagemProdutoAdicionado()
 				.endsWith("Product successfully added to your shopping cart"));
+
+		System.out.println(modalProdutoPage.obterTamanhoProduto());
+		System.out.println(modalProdutoPage.obterCorProduto());
+		System.out.println(modalProdutoPage.obterQuantidadeProduto());
 	}
 
 }
