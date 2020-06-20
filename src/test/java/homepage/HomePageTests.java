@@ -146,7 +146,10 @@ public class HomePageTests extends BaseTests {
 	Double esperado_totalTaxIncTotal = esperado_totalTaxExclTotal;
 	Double esperado_taxesTotal = 0.00;
 
+	String esperado_nomeCliente = "Marcelo Bittencourt";
+
 	CarrinhoPage carrinhoPage;
+
 	@Test
 	public void irParaCarrinho_InformacoesPersistidas() {
 		// --Pré-condições
@@ -174,41 +177,49 @@ public class HomePageTests extends BaseTests {
 		System.out.println(Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_totalTaxExclTotal()));
 		System.out.println(Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_totalTaxIncTotal()));
 		System.out.println(Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_taxesTotal()));
-		
-		// Asserções Hamcrest
-		
-		assertThat( carrinhoPage.obter_nomeProduto(), is(esperado_nomeProduto));
-		assertThat( Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_precoProduto()), is(esperado_precoProduto));
-		assertThat( carrinhoPage.obter_tamanhoProduto(), is(esperado_tamanhoProduto));
-		assertThat( carrinhoPage.obter_corProduto(), is(esperado_corProduto));
-		assertThat( Integer.parseInt(carrinhoPage.obter_input_quantidadeProduto()), is(esperado_input_quantidadeProduto));
-		assertThat( Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_subtotalProduto()), is(esperado_subtotalProduto));
 
+		// Asserções Hamcrest
+
+		assertThat(carrinhoPage.obter_nomeProduto(), is(esperado_nomeProduto));
+		assertThat(Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_precoProduto()), is(esperado_precoProduto));
+		assertThat(carrinhoPage.obter_tamanhoProduto(), is(esperado_tamanhoProduto));
+		assertThat(carrinhoPage.obter_corProduto(), is(esperado_corProduto));
+		assertThat(Integer.parseInt(carrinhoPage.obter_input_quantidadeProduto()),
+				is(esperado_input_quantidadeProduto));
+		assertThat(Funcoes.removeCifraoDevolveDouble(carrinhoPage.obter_subtotalProduto()),
+				is(esperado_subtotalProduto));
 
 	}
-	
+
 	CheckoutPage checkoutPage;
-	
+
 	@Test
 	public void IrParaCheckout_FreteMeioPagamentoEnderecoListadosOk() {
-		//Pré-condições
-		
-		
-		//Produto disponível no carrinho de compras
+		// Pré-condições
+
+		// Produto disponível no carrinho de compras
 		irParaCarrinho_InformacoesPersistidas();
-		
-		//Teste
-		
-		
-		//Clicar no botão
+
+		// Teste
+
+		// Clicar no botão
 		checkoutPage = carrinhoPage.clicarBotaoProceedToCheckout();
-		
-		//Preencher informações
-		
-		
-		//Validar Informações na tela
-		assertThat( Funcoes.removeCifraoDevolveDouble(checkoutPage.obter_totalTaxIncTotal()) , is(esperado_totalTaxIncTotal));
-		
+
+		// Preencher informações
+
+		// Validar Informações na tela
+		assertThat(Funcoes.removeCifraoDevolveDouble(checkoutPage.obter_totalTaxIncTotal()),
+				is(esperado_totalTaxIncTotal));
+		// assertThat(checkoutPage.obter_nomeCliente(), is(esperado_nomeCliente));
+		assertTrue(checkoutPage.obter_nomeCliente().startsWith(esperado_nomeCliente));
+
+		checkoutPage.clicarbotaoContinueAddress();
+
+		String encontrado_shippingValor = checkoutPage.obter_shippingValor();
+		encontrado_shippingValor = Funcoes.removeTextos(encontrado_shippingValor, " tax excl.");
+		Double encontrado_shippingValor_Double = Funcoes.removeCifraoDevolveDouble(encontrado_shippingValor);
+
+		assertThat(encontrado_shippingValor_Double, is(esperado_shippingTotal));
 	}
 
 }

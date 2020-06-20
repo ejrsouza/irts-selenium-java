@@ -11,4 +11,9 @@ public class Funcoes {
 		texto = texto.replace(" items", "");
 		return Integer.parseInt(texto);
 	}
+	
+	public static String removeTextos(String texto, String textoParaRemover) {
+		texto = texto.replace(textoParaRemover, "");
+		return texto;
+	}
 }
