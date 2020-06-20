@@ -18,7 +18,7 @@ public class LoginPage {
 		driver.findElement(email).sendKeys(texto);
 	}
 
-	public void preencherNome(String texto) {
+	public void preencherPassword(String texto) {
 		driver.findElement(password).sendKeys(texto);
 
 	}
