@@ -232,26 +232,32 @@ public class HomePageTests extends BaseTests {
 
 		assertThat(encontrado_amountPayByCheck_Double, is(esperado_totalTaxIncTotal));
 		// Clicar na opção "I agree"
-		
+
 		checkoutPage.selecionarCheckboxIAgree();
 		assertTrue(checkoutPage.estaSelecionadoCheckboxIAgree());
 	}
-	
+
 	PedidoPage pedidoPage;
-	
+
 	@Test
 	public void finalizarPedido_pedidoFinalizadoComSucesso() {
-		//Pré-condições
-		//checkout completamente concluído
+		// Pré-condições
+		// checkout completamente concluído
 		IrParaCheckout_FreteMeioPagamentoEnderecoListadosOk();
-		
-		//Teste
-		//Clicar no botão confirmar pedido
+
+		// Teste
+		// Clicar no botão confirmar pedido
 		pedidoPage = checkoutPage.clicarBotaoConfirmaPedido();
-		
-		//Validar valores da tela
+
+		// Validar valores da tela
 		assertTrue(pedidoPage.obter_textoPedidoConfirmado().endsWith("YOUR ORDER IS CONFIRMED"));
-		//assertThat(pedidoPage.obter_textoPedidoConfirmado().toUpperCase(), is("YOUR ORDER IS CONFIRMED"));
+		// assertThat(pedidoPage.obter_textoPedidoConfirmado().toUpperCase(), is("YOUR
+		// ORDER IS CONFIRMED"));
+
+		assertThat(pedidoPage.obter_email(), is("marcelo@teste.com"));
+		assertThat(pedidoPage.obter_totalProdutos(), is(esperado_subtotalProduto));
+		assertThat(pedidoPage.obter_totalTaxIncl(), is(esperado_totalTaxIncTotal));
+		assertThat(pedidoPage.obter_metodoPagamento(), is("Payments by check"));
 	}
 
 }
