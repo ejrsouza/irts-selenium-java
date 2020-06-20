@@ -220,6 +220,20 @@ public class HomePageTests extends BaseTests {
 		Double encontrado_shippingValor_Double = Funcoes.removeCifraoDevolveDouble(encontrado_shippingValor);
 
 		assertThat(encontrado_shippingValor_Double, is(esperado_shippingTotal));
+		checkoutPage.clicarbotaoContinueShipping();
+
+		// Selecionar opção "Pay by Check"
+		checkoutPage.selecionarRadioPayByCheck();
+		// Validar valor do check (amout)
+		String encontrado_amountPayByCheck = checkoutPage.obter_amountPayByCheck();
+		encontrado_amountPayByCheck = Funcoes.removeTextos(encontrado_amountPayByCheck, " (tax incl.)");
+		Double encontrado_amountPayByCheck_Double = Funcoes.removeCifraoDevolveDouble(encontrado_amountPayByCheck);
+
+		assertThat(encontrado_amountPayByCheck_Double, is(esperado_totalTaxIncTotal));
+		// Clicar na opção "I agree"
+		
+		checkoutPage.selecionarCheckboxIAgree();
+		assertTrue(checkoutPage.estaSelecionadoCheckboxIAgree());
 	}
 
 }
